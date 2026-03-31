@@ -82,10 +82,16 @@ class Handler(SimpleHTTPRequestHandler):
 
     def do_POST(self):
         global last_shill_global
-        if self.path == "/api/shill":
-            length = int(self.headers.get("Content-Length", 0))
-            body = json.loads(self.rfile.read(length)) if length > 0 else {}
-            quote = body.get("quote", "").strip()
+        path = self.path.split('?')[0]
+        if path == "/api/shill":
+            # Accept quote from query string (avoids CORS preflight) or JSON body
+            qs = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
+            if 'quote' in qs:
+                quote = qs['quote'][0].strip()
+            else:
+                length = int(self.headers.get("Content-Length", 0))
+                body = json.loads(self.rfile.read(length)) if length > 0 else {}
+                quote = body.get("quote", "").strip()
 
             if not quote or len(quote) > 200:
                 self._json(400, {"ok": False, "error": "Invalid quote"})

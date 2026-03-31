@@ -322,10 +322,8 @@ document.addEventListener('click', function(e) {
     }
     btn.classList.add('cooldown');
     lastShill = now;
-    fetch('/api/shill', {
+    fetch('/api/shill?quote=' + encodeURIComponent(text), {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({quote: text})
     }).then(r => r.json()).then(d => {
       if (d.ok) {
         showToast('Shilled to Telegram!', 'shill');
