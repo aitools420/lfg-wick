@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LFG</title>
+<link rel="icon" type="image/png" href="favicon-32.png">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0a0a0a;
+    color: #0f0;
+    font-family: 'Courier New', monospace;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+  }
+  h1 {
+    text-align: center;
+    font-size: 4rem;
+    margin-bottom: 10px;
+    text-shadow: 0 0 30px rgba(0,255,0,0.5);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { text-shadow: 0 0 30px rgba(0,255,0,0.5); }
+    50% { text-shadow: 0 0 60px rgba(0,255,0,0.8), 0 0 100px rgba(0,255,0,0.3); }
+  }
+  .subtitle {
+    text-align: center;
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 50px;
+  }
+  .quote {
+    border-left: 3px solid #0f0;
+    padding: 12px 20px;
+    margin: 8px 0;
+    background: rgba(0,255,0,0.03);
+    font-size: 1.05rem;
+    transition: all 0.2s;
+    cursor: default;
+    position: relative;
+  }
+  .quote:hover {
+    background: rgba(0,255,0,0.08);
+    border-left-color: #0f0;
+    transform: translateX(5px);
+  }
+  .quote.excluded {
+    opacity: 0.15;
+    text-decoration: line-through;
+    border-left-color: #333;
+  }
+  .quote .toggle {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 0.8rem;
+    color: #666;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .quote:hover .toggle { opacity: 1; }
+  .category {
+    color: #0a0;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 35px;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #1a1a1a;
+  }
+  .back {
+    display: block;
+    text-align: center;
+    margin-top: 50px;
+    color: #333;
+    text-decoration: none;
+    font-size: 0.85rem;
+  }
+  .back:hover { color: #0f0; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>LFG</h1>
+  <p class="subtitle">click to exclude / include &mdash; tell me which stay</p>
+
+  <div class="category">The Classics</div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">You are NOT bullish enough<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Do not fade generational wealth<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">This is an IQ test<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Few understand this<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">We are so early<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">WAGMI<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">NGMI if you're not in this<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">LFG<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">This is the way<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Apes together strong<span class="toggle">[x]</span></div>
+
+  <div class="category">Urgency & FOMO</div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Last chance to buy below $X<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">If you're reading this, you're still early<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">You'll wish you bought more<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">The train is leaving the station<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">This is your sign<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Set a reminder for 6 months. Come back and thank me<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Screenshot this<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Imagine not buying here<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">You have been warned<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">People will FOMO in at 10x from here<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">The risk is not owning any<span class="toggle">[x]</span></div>
+
+  <div class="category">Price Predictions</div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Easy 100x from here<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">$1 is programmed<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">This is a $10B market cap token at minimum<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Price discovery mode<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Blue sky breakout<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">God candle incoming<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Sell your house. Sell your car. Buy more<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Number go up technology<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Up only<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Floor is lava. Price only goes up<span class="toggle">[x]</span></div>
+
+  <div class="category">Pseudo-Intellectual</div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">The asymmetry here is insane<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">This is the most asymmetric bet in crypto right now<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Risk-reward has never been better<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">The Lindy effect is strong with this one<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">This is a Veblen good<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Game theory dictates you must buy<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">The tokenomics are immaculate<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Deflationary by design. Math doesn't lie<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Supply shock is coming<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Read the whitepaper and you'll understand<span class="toggle">[x]</span></div>
+
+  <div class="category">Social Proof & Authority</div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Smart money is accumulating<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Whales are loading<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">The devs are based<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Team is doxxed. This is legit<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Insiders know<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">I know something you don't<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Just trust me bro<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">NFA but also FA<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Not financial advice, but you'd be stupid not to<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">My mass-murder-conviction portfolio manager cousin bought a bag<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Every cycle has THE trade. This is it<span class="toggle">[x]</span></div>
+
+  <div class="category">Community & Culture</div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">The community is unmatched<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Diamond hands only<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Paper hands get rekt<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Weak hands shaken out. Only believers left<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">If you sell here you deserve to be poor<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">HODL and chill<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Buy the dip<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Zoom out<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Ser, this is a long-term hold<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">The FUD is actually bullish<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Bullish on the tech. Bullish on the team. Bullish on the vibes<span class="toggle">[x]</span></div>
+
+  <div class="category">Delusion & Copium</div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">This dip is a blessing in disguise<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Shaking out weak hands before the pump<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Accumulation phase<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">It's not a loss if you don't sell<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">We're building in a bear market<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Bear markets make millionaires<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Unrealised losses aren't real losses<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">The chart looks exactly like Amazon in 2001<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">This is Bitcoin in 2013<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Patience will be rewarded<span class="toggle">[x]</span></div>
+
+  <div class="category">Technical Analysis Copium</div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Bullish divergence on the daily<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Inverse head and shoulders forming<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Golden cross imminent<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Cup and handle. Textbook<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">The RSI is oversold. Reversal incoming<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Support held beautifully<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Breakout confirmed<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">If you can't see this setup you shouldn't be trading<span class="toggle">[x]</span></div>
+
+  <div class="category">Exit Liquidity Specials</div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">I'm not selling a single token until $X<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Taking profits is for people who don't understand the vision<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Why would I sell? This is going to zero or to the moon<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">I'd rather go to zero than sell here<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Selling now is literally giving your money away<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">My grandchildren will thank me<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">I'm passing this wallet to my kids<span class="toggle">[x]</span></div>
+
+  <div class="category">Conspiracy & Suppression</div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">They don't want you to know about this<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Banks are scared<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">The FUD is coordinated<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Market makers are suppressing the price<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Once the manipulation stops, it's over for shorts<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">The whales want your tokens cheap. Don't give them<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">This is financial censorship<span class="toggle">[x]</span></div>
+
+  <div class="category">Lifestyle Flexing</div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">See you on the yacht<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Lambo or food stamps<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Wen Lambo<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">My wife's boyfriend even bought some<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">I quit my job for this<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Already picked out my island<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Quitting the 9-5 thanks to this gem<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">This is my retirement plan<span class="toggle">[x]</span></div>
+
+  <div class="category">The Guilt Trip</div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">I tried to tell you<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Don't say I didn't warn you<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Remember when I said buy? Yeah<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">You'll regret not listening<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">I shared this with you at $0.001. Just remember that<span class="toggle">[x]</span></div>
+  <div class="quote" onclick="this.classList.toggle('excluded')">Bookmark this tweet<span class="toggle">[x]</span></div>
+
+  <a href="https://wick.pics" class="back">wick.pics</a>
+</div>
+</body>
+</html>
