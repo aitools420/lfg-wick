@@ -286,61 +286,68 @@ function showToast(msg, cls) {
   t._tid = setTimeout(() => t.className = '', 2500);
 }
 
-function copyQuote(text) {
-  navigator.clipboard.writeText('"' + text + '" (LFG WICK)').then(() => {
-    showToast('Copied!');
-  }).catch(() => {
-    showToast('Copy failed');
-  });
-}
-
-function shillQuote(text, btn) {
-  const now = Date.now();
-  if (now - lastShill < SHILL_COOLDOWN) {
-    const left = Math.ceil((SHILL_COOLDOWN - (now - lastShill)) / 1000);
-    showToast('Cooldown: ' + left + 's', 'shill');
-    return;
-  }
-  btn.classList.add('cooldown');
-  lastShill = now;
-  fetch('/api/shill', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({quote: text})
-  }).then(r => r.json()).then(d => {
-    if (d.ok) {
-      showToast('Shilled to Telegram!', 'shill');
-      btn.closest('.quote').classList.add('sent');
-      setTimeout(() => btn.closest('.quote').classList.remove('sent'), 3000);
-      // Update counter
-      const counter = btn.closest('.quote').querySelector('.counter');
-      if (counter) {
-        const cur = parseInt(counter.textContent) || 0;
-        counter.textContent = (cur + 1) + 'x';
-      }
-    } else {
-      showToast(d.error || 'Failed', 'shill');
-    }
-  }).catch(() => showToast('Network error', 'shill'))
-  .finally(() => setTimeout(() => btn.classList.remove('cooldown'), SHILL_COOLDOWN));
-}
-
-// Inject action buttons and counters into every quote
+// Store original quote text on each element via data attribute
 document.querySelectorAll('.quote').forEach(q => {
   const text = q.textContent.trim();
-  q.innerHTML = text +
+  q.dataset.quote = text;
+  q.innerHTML =
+    '<span class="text">' + text + '</span>' +
     '<span class="counter"></span>' +
     '<span class="actions">' +
-      '<button class="btn" onclick="event.stopPropagation();copyQuote(\'' + text.replace(/'/g, "\\'") + '\')">copy</button>' +
-      '<button class="btn shill" onclick="event.stopPropagation();shillQuote(\'' + text.replace(/'/g, "\\'") + '\', this)">shill</button>' +
+      '<button class="btn copy-btn">copy</button>' +
+      '<button class="btn shill shill-btn">shill</button>' +
     '</span>';
+});
+
+// Event delegation — handles all clicks, no inline onclick needed
+document.addEventListener('click', function(e) {
+  const btn = e.target;
+  const quote = btn.closest('.quote');
+  if (!quote) return;
+  const text = quote.dataset.quote;
+  if (!text) return;
+
+  if (btn.classList.contains('copy-btn')) {
+    navigator.clipboard.writeText('"' + text + '" (LFG WICK)').then(() => {
+      showToast('Copied!');
+    }).catch(() => showToast('Copy failed'));
+  }
+
+  if (btn.classList.contains('shill-btn')) {
+    const now = Date.now();
+    if (now - lastShill < SHILL_COOLDOWN) {
+      const left = Math.ceil((SHILL_COOLDOWN - (now - lastShill)) / 1000);
+      showToast('Cooldown: ' + left + 's', 'shill');
+      return;
+    }
+    btn.classList.add('cooldown');
+    lastShill = now;
+    fetch('/api/shill', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({quote: text})
+    }).then(r => r.json()).then(d => {
+      if (d.ok) {
+        showToast('Shilled to Telegram!', 'shill');
+        quote.classList.add('sent');
+        setTimeout(() => quote.classList.remove('sent'), 3000);
+        const counter = quote.querySelector('.counter');
+        if (counter) {
+          const cur = parseInt(counter.textContent) || 0;
+          counter.textContent = (cur + 1) + 'x';
+        }
+      } else {
+        showToast(d.error || 'Failed', 'shill');
+      }
+    }).catch(() => showToast('Network error', 'shill'))
+    .finally(() => setTimeout(() => btn.classList.remove('cooldown'), SHILL_COOLDOWN));
+  }
 });
 
 // Load counters
 fetch('/api/counts').then(r => r.json()).then(counts => {
   document.querySelectorAll('.quote').forEach(q => {
-    const text = q.textContent.replace(/\d+x$/, '').replace('copyshill', '').trim();
-    const c = counts[text];
+    const c = counts[q.dataset.quote];
     if (c) {
       const counter = q.querySelector('.counter');
       if (counter) counter.textContent = c + 'x';
