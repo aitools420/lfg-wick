@@ -150,7 +150,7 @@
   <div class="quote">GGs</div>
 
   <div class="category">Urgency & FOMO</div>
-  <div class="quote">Last chance to buy below $X</div>
+  <div class="quote" id="price-quote">Last chance to buy below $...</div>
   <div class="quote">If you're reading this, you're still early</div>
   <div class="quote">You'll wish you bought more</div>
   <div class="quote">The train is leaving the station</div>
@@ -353,6 +353,26 @@ fetch('/api/counts').then(r => r.json()).then(counts => {
     }
   });
 }).catch(() => {});
+
+// Dynamic WICK price for "Last chance to buy below $X"
+fetch('https://api.dexscreener.com/latest/dex/tokens/0x8cdaf3d630da9e1450832924d5701cc0500e9cfc')
+  .then(r => r.json()).then(data => {
+    const pairs = (data.pairs || []).filter(p => p.chainId === 'pulsechain');
+    if (!pairs.length) return;
+    const best = pairs.sort((a,b) => (b.liquidity?.usd||0) - (a.liquidity?.usd||0))[0];
+    const price = parseFloat(best.priceUsd);
+    if (!price || isNaN(price)) return;
+    // Round up to nearest significant figure
+    const magnitude = Math.pow(10, Math.floor(Math.log10(price)));
+    const rounded = Math.ceil(price / magnitude * 10) / 10 * magnitude;
+    const formatted = '$' + rounded.toFixed(Math.max(0, -Math.floor(Math.log10(rounded)) + 1));
+    const el = document.getElementById('price-quote');
+    if (el) {
+      const text = 'Last chance to buy below ' + formatted;
+      el.dataset.quote = text;
+      el.querySelector('.text').textContent = text;
+    }
+  }).catch(() => {});
 </script>
 </body>
 </html>
