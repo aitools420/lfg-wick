@@ -362,10 +362,12 @@ fetch('https://api.dexscreener.com/latest/dex/tokens/0x8cdaf3d630da9e1450832924d
     const best = pairs.sort((a,b) => (b.liquidity?.usd||0) - (a.liquidity?.usd||0))[0];
     const price = parseFloat(best.priceUsd);
     if (!price || isNaN(price)) return;
-    // Round up to nearest significant figure
-    const magnitude = Math.pow(10, Math.floor(Math.log10(price)));
-    const rounded = Math.ceil(price / magnitude * 10) / 10 * magnitude;
-    const formatted = '$' + rounded.toFixed(Math.max(0, -Math.floor(Math.log10(rounded)) + 1));
+    // Round up to 1 significant figure (e.g. 0.0051 → 0.006, 0.12 → 0.2, 15 → 20)
+    const exp = Math.floor(Math.log10(price));
+    const magnitude = Math.pow(10, exp);
+    const rounded = Math.ceil(price / magnitude) * magnitude;
+    const decimals = Math.max(0, -exp);
+    const formatted = '$' + rounded.toFixed(decimals);
     const el = document.getElementById('price-quote');
     if (el) {
       const text = 'Last chance to buy below ' + formatted;
