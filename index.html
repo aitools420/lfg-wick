@@ -137,16 +137,17 @@
   <p class="subtitle">copy or shill to telegram</p>
 
   <div class="category">The Classics</div>
+  <div class="quote">Higher</div>
   <div class="quote">You are NOT bullish enough</div>
   <div class="quote">Do not fade generational wealth</div>
   <div class="quote">This is an IQ test</div>
   <div class="quote">Few understand this</div>
   <div class="quote">We are so early</div>
   <div class="quote">WAGMI</div>
-  <div class="quote">NGMI if you're not in this</div>
   <div class="quote">LFG</div>
   <div class="quote">This is the way</div>
-  <div class="quote">Apes together strong</div>
+  <div class="quote">Apes strong together</div>
+  <div class="quote">GGs</div>
 
   <div class="category">Urgency & FOMO</div>
   <div class="quote">Last chance to buy below $X</div>
@@ -308,7 +309,7 @@ document.addEventListener('click', function(e) {
   if (!text) return;
 
   if (btn.classList.contains('copy-btn')) {
-    navigator.clipboard.writeText('"' + text + '" (LFG WICK)').then(() => {
+    navigator.clipboard.writeText(text + ' \u2014 lfg.wick.pics').then(() => {
       showToast('Copied!');
     }).catch(() => showToast('Copy failed'));
   }
