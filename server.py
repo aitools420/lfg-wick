@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """lfg.wick.pics — Crypto cliche wall with Telegram shill cannon."""
 
-import json, os, time, urllib.request, urllib.parse
+import json, os, time, html, urllib.request, urllib.parse
 from pathlib import Path
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 
@@ -10,14 +10,15 @@ DIR = Path(__file__).parent
 COUNTS_FILE = DIR / "counts.json"
 
 # WICK announcements bot → WICK community channel
-TG_BOT_TOKEN = "8392510530:AAHjJzFdwygfxviKwSrpSXCKJsGN5BwnGZ8"
-TG_CHAT_ID = "-1002376855211"
+TG_BOT_TOKEN = os.environ.get("LFG_TG_BOT_TOKEN", "")
+TG_CHAT_ID = os.environ.get("LFG_TG_CHAT_ID", "-1002376855211")
 
 # Rate limiting
 GLOBAL_COOLDOWN_S = 30
 IP_COOLDOWN_S = 60
+MAX_IP_ENTRIES = 1000  # cap to prevent unbounded memory growth
 last_shill_global = 0
-ip_last_shill = {}  # ip -> timestamp
+ip_last_shill = {}  # ip -> timestamp, purged after IP_COOLDOWN_S
 
 
 def load_counts():
@@ -104,15 +105,23 @@ class Handler(SimpleHTTPRequestHandler):
                 self._json(429, {"ok": False, "error": f"Global cooldown: {left}s"})
                 return
 
-            # Rate limit — per IP
+            # Rate limit — per IP (purge expired entries, cap total size)
+            ip_last_shill_clean = {k: v for k, v in ip_last_shill.items() if now - v < IP_COOLDOWN_S}
+            ip_last_shill.clear()
+            if len(ip_last_shill_clean) <= MAX_IP_ENTRIES:
+                ip_last_shill.update(ip_last_shill_clean)
+            else:
+                # Keep only the most recent entries
+                recent = sorted(ip_last_shill_clean.items(), key=lambda x: x[1], reverse=True)[:MAX_IP_ENTRIES]
+                ip_last_shill.update(recent)
             ip = self.client_address[0]
             if now - ip_last_shill.get(ip, 0) < IP_COOLDOWN_S:
                 left = int(IP_COOLDOWN_S - (now - ip_last_shill.get(ip, 0)))
                 self._json(429, {"ok": False, "error": f"Cooldown: {left}s"})
                 return
 
-            # Send to Telegram
-            msg = f'🚀 <i>"{quote}"</i>\n\n— <a href="https://lfg.wick.pics">lfg.wick.pics</a>'
+            # Send to Telegram (HTML-escape user input to prevent format injection)
+            msg = f'🚀 <i>{html.escape(quote)}</i>\n\n— <a href="https://lfg.wick.pics">lfg.wick.pics</a>'
             ok = send_telegram(msg)
             if ok:
                 last_shill_global = now
