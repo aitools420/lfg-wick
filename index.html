@@ -327,7 +327,7 @@ document.addEventListener('click', function(e) {
     }
     btn.classList.add('cooldown');
     lastShill = now;
-    fetch('/api/shill?quote=' + encodeURIComponent(text), {
+    fetch('https://lfg-shill.trevorgdhawg.workers.dev/shill?quote=' + encodeURIComponent(text), {
       method: 'POST',
     }).then(r => r.json()).then(d => {
       if (d.ok) {
@@ -348,7 +348,7 @@ document.addEventListener('click', function(e) {
 });
 
 // Load counters
-fetch('/api/counts').then(r => r.json()).then(counts => {
+fetch('https://lfg-shill.trevorgdhawg.workers.dev/counts').then(r => r.json()).then(counts => {
   document.querySelectorAll('.quote').forEach(q => {
     const c = counts[q.dataset.quote];
     if (c) {
